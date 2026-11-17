@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>아마추어 무선 &amp; 전파공학 공식 핸드북</title>
+<meta name="description" content="직류·교류 기초부터 RF 공진, 안테나·급전선, 데시벨, 전파 전파, 수신기 성능까지 아마추어 무선 공식 24개와 저항 색띠 코드표">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+[hidden]{display:none!important}
+:root{
+  color-scheme: light;
+  --bg:#ffffff;--screen:#f5f7fa;--line:#dde3ec;--muted:#5f6b7d;--soft:#2f3a4a;--fg:#141b26;
+  --pi:#c2185b;--w:#00747f;--c:#1f63c6;
+  --btn:#1d2d44;--btn-hover:#2f4668;--btn-shadow:#b9c3d2;
+  --font-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.75;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+main{max-width:760px;margin:0 auto}
+h1,h2,h3{text-wrap:balance;line-height:1.35;margin:0}
+p{margin:0}
+a{color:var(--w)}
+.hero{padding-block:56px 28px;display:grid;gap:18px;text-align:center}
+.eyebrow{font-size:13px;letter-spacing:.08em;color:var(--muted)}
+.hero h1{font-size:clamp(26px,5vw,36px);font-weight:700}
+.hero .lede{color:var(--soft);max-width:58ch;margin:0 auto}
+.cast-label{font-size:13px;color:var(--muted);margin-top:4px}
+.cast{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:0;margin:6px 0 0;list-style:none}
+.cast a{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid var(--muted);border-radius:999px;color:var(--fg);background:var(--line);text-decoration:none;font-size:14px;font-weight:600;box-shadow:0 2px 0 var(--btn-shadow);transition:background .15s,transform .08s}
+.cast a::after{content:"↓";font-size:12px;color:var(--soft)}
+.cast a:hover,.cast a:focus-visible{background:#cfd8e5;border-color:var(--fg)}
+.cast a:active{transform:translateY(2px);box-shadow:none}
+a:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--w);outline-offset:2px}
+.find{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:6px}
+.find label{font-size:13px;color:var(--muted)}
+.find input{font:inherit;font-size:15px;width:min(340px,100%);padding:7px 12px;border:1px solid var(--muted);border-radius:6px;background:var(--bg);color:var(--fg)}
+.find-msg{flex-basis:100%;font-size:13px;color:var(--muted);min-height:1.2em}
+.scene{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;padding-block:44px;border-top:1px solid var(--line)}
+.tag{font-family:var(--font-mono);font-size:12px;letter-spacing:.12em;color:var(--muted)}
+.scene h2{font-size:clamp(21px,3.6vw,26px);font-weight:700}
+.sec-sub{color:var(--muted);font-size:14px;margin-top:-10px}
+.fcard{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;padding:20px;border:1px solid var(--line);border-radius:6px;background:var(--bg);min-width:0;scroll-margin-top:16px}
+.fc-hd{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start}
+.fc-no{font-family:var(--font-mono);font-weight:600;font-size:13px;color:var(--bg);background:var(--fg);border-radius:4px;padding:2px 7px;margin-top:3px}
+.fcard h3{font-size:17.5px;font-weight:700}
+.fc-sub{font-size:14px;color:var(--muted);margin-top:2px}
+.fx{background:var(--screen);border:1px solid var(--line);border-radius:6px;padding:4px 16px}
+.fx-row{display:grid;grid-template-columns:8.5em minmax(0,1fr);gap:4px 14px;align-items:center;padding-block:10px}
+.fx-row+.fx-row{border-top:1px dashed var(--line)}
+.fx-lbl{font-size:13px;font-weight:600;color:var(--muted)}
+.math{display:flex;flex-wrap:wrap;align-items:center;gap:4px 30px;padding-block:2px;color:var(--fg);font-size:17px;min-width:0}
+.math .m{max-width:100%;overflow-x:auto;overflow-y:hidden}
+.math mjx-container[display="true"]{margin:0!important;text-align:left!important}
+.fx-note{font-size:13.5px;color:var(--soft);padding:10px 0;border-top:1px dashed var(--line)}
+.syms{border:1px solid var(--line);border-radius:6px}
+.syms-hd{padding:7px 14px;font-size:13px;font-weight:600;color:var(--muted)}
+.sy-list{display:grid;border-top:1px solid var(--line)}
+.sy{display:grid;grid-template-columns:minmax(6.5em,auto) minmax(0,1fr) auto;gap:4px 14px;align-items:baseline;padding:7px 14px;font-size:14px}
+.sy+.sy{border-top:1px solid #edf1f6}
+.sy-s{color:var(--fg);white-space:nowrap}
+.sy-d{color:var(--soft);line-height:1.6}
+.sy-u{font-family:var(--font-mono);font-size:12.5px;color:var(--muted);text-align:right;white-space:nowrap}
+.point{padding:12px 16px;background:var(--screen);border-left:3px solid var(--w);display:grid;gap:4px}
+.point-hd{font-size:13px;font-weight:600;color:var(--w)}
+.point p{color:var(--soft);font-size:15px}
+.point b,.rguide b{color:var(--fg)}
+.fig{margin:0;display:grid;gap:6px}
+.fig svg{width:100%;max-width:520px;height:auto;margin:0 auto;display:block;font-family:var(--font-body)}
+.fig figcaption{font-size:13px;color:var(--muted);text-align:center}
+.qrefs{display:flex;flex-wrap:wrap;gap:12px}
+.qref{flex:1 1 260px;min-width:0}
+.qcap{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:4px}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:14.5px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
+th{font-weight:500;color:var(--muted);font-size:13px}
+td:first-child{font-weight:600}
+.rguide{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.rguide>div{padding:12px 14px;background:var(--screen);border:1px solid var(--line);border-radius:6px;font-size:14.5px;color:var(--soft);line-height:1.65}
+.rform{font-size:13px;color:var(--muted)}
+.rex{margin-top:6px;font-size:13.5px}
+.rtbl td.rc{text-align:left;white-space:nowrap}
+.rtbl td.rc small{color:var(--muted);font-weight:400;margin-left:2px}
+.rtbl th:first-child{text-align:left}
+.chip{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:8px;border:1px solid #94a3b8}
+footer{padding-block:32px 0;border-top:1px solid var(--line);font-size:13px;color:var(--muted);display:grid;gap:6px}
+@media (max-width:600px){
+  .fcard{padding:16px 14px}
+  .fx{padding:2px 12px}
+  .fx-row{grid-template-columns:minmax(0,1fr);gap:2px}
+  .math{font-size:15px}
+  table{font-size:13.5px}
+  th,td{padding:7px 6px}
+  .sy{grid-template-columns:minmax(0,auto) minmax(0,1fr);padding:7px 12px}
+  .sy-u{grid-column:2;text-align:left}
+  .sy-s{white-space:normal}
+  .sy-u:empty{display:none}
+  .rguide{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:360px){.math{font-size:13.5px}.fcard{padding:14px 10px}.fx{padding:2px 10px}}
+@media print{.cast,.find{display:none}.fcard{break-inside:avoid}}
+</style>
+<script>
+window.MathJax = {
+  tex:{inlineMath:[['\\(','\\)']], displayMath:[['\\[','\\]']]},
+  svg:{fontCache:'global'}
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" async></script>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <div class="eyebrow">무선 공식 · 편람</div>
+    <h1>아마추어 무선 &amp; 전파공학 공식 핸드북</h1>
+    <p class="lede">기초 직류·교류 전기부터 고주파 공진과 주파수 변환, 안테나·급전선·감쇠기, 데시벨과 전계 강도, 전파 전파와 수신기 성능까지 무선국에서 자주 쓰는 공식 24개를 한곳에 모았습니다. 공식마다 기호와 단위, 운용에서 쓰이는 예를 함께 적었습니다.</p>
+    <p class="cast-label">목차 · 누르면 그 장으로 이동합니다</p>
+    <ul class="cast" aria-label="목차"><li><a href="#s1">1 직류·기초 전기</a></li><li><a href="#s2">2 교류·정류·변압</a></li><li><a href="#s3">3 고주파·공진·IF</a></li><li><a href="#s4">4 안테나·급전선·ARDF</a></li><li><a href="#s5">5 데시벨·이득·전계강도</a></li><li><a href="#s6">6 전파 전파·수신기</a></li><li><a href="#s7">부록 저항 색띠</a></li></ul>
+    <div class="find" role="search">
+      <label for="find">공식 찾기</label>
+      <input id="find" type="search" placeholder="예: SWR, 감쇠기, MUF, 시정수" autocomplete="off">
+      <div class="find-msg" id="find-msg" aria-live="polite"></div>
+    </div>
+  </header>
+
+  <section class="scene" id="s1">
+    <div class="tag">1 · 직류 · 공식 01–04</div>
+    <h2>직류와 기초 전기 회로</h2>
+    <p class="sec-sub">옴의 법칙 · 도선 저항 · 전력량 · 저항 결합 · 배터리 내부 저항</p>
+    
+    <article class="fcard" id="f01" data-k="옴의 법칙 · 도선 저항 · 전압 강하 전압(V), 전류(I), 도선 저항(R)과 전원선의 전압 강하">
+      <header class="fc-hd"><span class="fc-no">01</span><div><h3>옴의 법칙 · 도선 저항 · 전압 강하</h3><p class="fc-sub">전압(V), 전류(I), 도선 저항(R)과 전원선의 전압 강하</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">옴의 법칙</div><div class="math"><div class="m">\[ V = IR \]</div><div class="m">\[ I = \frac{V}{R}, \quad R = \frac{V}{I} \]</div></div></div><div class="fx-row"><div class="fx-lbl">도선 저항</div><div class="math"><div class="m">\[ R = \rho\,\frac{l}{A} \]</div></div></div><div class="fx-row"><div class="fx-lbl">왕복 전압 강하</div><div class="math"><div class="m">\[ \Delta V = 2\,I\,R_{\text{wire}} \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(V,\ \Delta V\)</div><div class="sy-d">전압, 선로 왕복 전압 강하</div><div class="sy-u">V</div></div><div class="sy"><div class="sy-s">\(I\)</div><div class="sy-d">회로에 흐르는 전류</div><div class="sy-u">A</div></div><div class="sy"><div class="sy-s">\(R,\ R_{\text{wire}}\)</div><div class="sy-d">부하 저항, 편도 배선 저항</div><div class="sy-u">Ω</div></div><div class="sy"><div class="sy-s">\(\rho\)</div><div class="sy-d">도체 고유저항 (연동선 ≈ 1.72×10⁻⁸)</div><div class="sy-u">Ω·m</div></div><div class="sy"><div class="sy-s">\(l,\ A\)</div><div class="sy-d">도선 길이, 도선 단면적</div><div class="sy-u">m, m²</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>전기 회로의 가장 기본이 되는 공식입니다. 100 W 송신기를 운용하면 파워서플라이나 배터리에서 13.8 V, 20 A 이상의 큰 전류가 흐르므로, 전원선이 얇거나 길면 왕복 배선 저항(2<i>R</i><sub>wire</sub>)에서 큰 전압 강하(Δ<i>V</i>)가 생겨 무전기가 리셋될 수 있습니다. 전원선은 AWG 10~12 또는 그보다 굵은 규격을 씁니다(AWG는 숫자가 작을수록 굵습니다).</p></div>
+    </article>
+    <article class="fcard" id="f02" data-k="전력 · 전력량 · 효율과 발열 손실 전력(P), 와트시(Wh), 효율(η)과 손실">
+      <header class="fc-hd"><span class="fc-no">02</span><div><h3>전력 · 전력량 · 효율과 발열 손실</h3><p class="fc-sub">전력(P), 와트시(Wh), 효율(η)과 손실</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">전력</div><div class="math"><div class="m">\[ P = IV = \frac{V^2}{R} = I^2 R \]</div></div></div><div class="fx-row"><div class="fx-lbl">전력량</div><div class="math"><div class="m">\[ W = Pt = VIt \]</div></div></div><div class="fx-row"><div class="fx-lbl">효율</div><div class="math"><div class="m">\[ \eta = \frac{P_{\text{out}}}{P_{\text{in}}} \times 100\,\% \]</div></div></div><div class="fx-row"><div class="fx-lbl">열 손실 전력</div><div class="math"><div class="m">\[ P_{\text{loss}} = P_{\text{in}} - P_{\text{out}} \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(P\)</div><div class="sy-d">전력</div><div class="sy-u">W</div></div><div class="sy"><div class="sy-s">\(W\)</div><div class="sy-d">전력량(전기 에너지)</div><div class="sy-u">J 또는 Wh</div></div><div class="sy"><div class="sy-s">\(t\)</div><div class="sy-d">사용 시간</div><div class="sy-u">s 또는 h</div></div><div class="sy"><div class="sy-s">\(\eta\)</div><div class="sy-d">에너지 변환 효율</div><div class="sy-u">%</div></div><div class="sy"><div class="sy-s">\(P_{\text{in}},\ P_{\text{out}},\ P_{\text{loss}}\)</div><div class="sy-d">직류 입력 전력, 고주파 출력 전력, 발열 손실 전력</div><div class="sy-u">W</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>소모 전력과 배터리 사용 시간을 계산하는 기본 공식입니다. 12 V 10 Ah 배터리의 전력량은 120 Wh입니다. 종단 증폭기 효율이 50 %일 때 100 W를 송신하면 직류 입력 전력은 200 W(13.8 V 기준 약 14.5 A)이고, 나머지 100 W는 모두 열(<i>P</i><sub>loss</sub>)로 나오므로 방열판과 냉각팬이 꼭 필요합니다.</p></div>
+    </article>
+    <article class="fcard" id="f03" data-k="저항 결합과 전압 분배 직렬·병렬 합성 저항, 합분의 곱, 분압 공식">
+      <header class="fc-hd"><span class="fc-no">03</span><div><h3>저항 결합과 전압 분배</h3><p class="fc-sub">직렬·병렬 합성 저항, 합분의 곱, 분압 공식</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">직렬</div><div class="math"><div class="m">\[ R_T = R_1 + R_2 + R_3 \]</div></div></div><div class="fx-row"><div class="fx-lbl">병렬</div><div class="math"><div class="m">\[ \frac{1}{R_T} = \frac{1}{R_1} + \frac{1}{R_2} + \frac{1}{R_3} \]</div></div></div><div class="fx-row"><div class="fx-lbl">2개 병렬</div><div class="math"><div class="m">\[ R_T = \frac{R_1 R_2}{R_1 + R_2} \]</div></div></div><div class="fx-row"><div class="fx-lbl">전압 분배</div><div class="math"><div class="m">\[ V_{\text{out}} = V_{\text{in}}\,\frac{R_2}{R_1 + R_2} \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(R_T\)</div><div class="sy-d">합성 저항</div><div class="sy-u">Ω</div></div><div class="sy"><div class="sy-s">\(R_1,\ R_2,\ R_3\)</div><div class="sy-d">각 저항값</div><div class="sy-u">Ω</div></div><div class="sy"><div class="sy-s">\(V_{\text{in}},\ V_{\text{out}}\)</div><div class="sy-d">입력 전압, R₂ 양단의 분압 출력 전압</div><div class="sy-u">V</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>저항 2개가 병렬이면 ‘합분의 곱’으로 바로 암산할 수 있습니다. 100 Ω 50 W 무유도 저항 2개를 병렬로 이으면 (100×100)/(100+100) = 50 Ω, 허용 전력 100 W짜리 송신기 시험용 더미 로드가 됩니다. 전압 분배식은 트랜지스터 베이스 바이어스를 정할 때 씁니다.</p></div>
+    </article>
+    <article class="fcard" id="f04" data-k="배터리 내부 저항과 단자 전압 강하(Sag) 기전력(E), 내부 저항(r)과 최대 전력 전달">
+      <header class="fc-hd"><span class="fc-no">04</span><div><h3>배터리 내부 저항과 단자 전압 강하(Sag)</h3><p class="fc-sub">기전력(E), 내부 저항(r)과 최대 전력 전달</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">단자 전압</div><div class="math"><div class="m">\[ V_{\text{terminal}} = E - I\,r_{\text{int}} \]</div></div></div><div class="fx-row"><div class="fx-lbl">단락 전류</div><div class="math"><div class="m">\[ I_{\text{sc}} = \frac{E}{r_{\text{int}}} \]</div></div></div><div class="fx-row"><div class="fx-lbl">최대 전력 전달</div><div class="math"><div class="m">\[ P_{\max} = \frac{E^2}{4\,r_{\text{int}}} \]</div><div class="m">\[ (R_L = r_{\text{int}}) \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(V_{\text{terminal}}\)</div><div class="sy-d">부하를 걸었을 때 실제 단자 전압</div><div class="sy-u">V</div></div><div class="sy"><div class="sy-s">\(E\)</div><div class="sy-d">무부하 개방 기전력</div><div class="sy-u">V</div></div><div class="sy"><div class="sy-s">\(I\)</div><div class="sy-d">방전 전류</div><div class="sy-u">A</div></div><div class="sy"><div class="sy-s">\(r_{\text{int}},\ R_L\)</div><div class="sy-d">배터리 내부 저항, 부하 저항</div><div class="sy-u">Ω</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>수신 대기 때 12.8 V이던 배터리가 PTT를 누르면 11 V대로 떨어지는 현상(voltage sag)을 설명하는 공식입니다. 내부 저항(<i>r</i><sub>int</sub>)이 큰 오래된 납축전지나 알칼라인 전지는 큰 전류를 낼 때 전압이 크게 떨어지므로, 야외 이동 운용에는 내부 저항이 매우 낮은 인산철(LiFePO₄) 배터리가 유리합니다.</p></div>
+    </article>
+  </section>
+  <section class="scene" id="s2">
+    <div class="tag">2 · 교류 · 공식 05–08</div>
+    <h2>교류, 수동 소자와 정류 회로</h2>
+    <p class="sec-sub">교류 실효값 · 정류 평활 전압 · C/L 에너지 저장 · 변압기 권수비</p>
+    
+    <article class="fcard" id="f05" data-k="교류 실효값(RMS)과 정류 회로 출력 전압 실효 전압, 반파·전파 정류, 무부하 평활 피크 전압">
+      <header class="fc-hd"><span class="fc-no">05</span><div><h3>교류 실효값(RMS)과 정류 회로 출력 전압</h3><p class="fc-sub">실효 전압, 반파·전파 정류, 무부하 평활 피크 전압</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">실효값</div><div class="math"><div class="m">\[ V_{\text{rms}} = \frac{V_{\text{peak}}}{\sqrt{2}} \approx 0.707\,V_{\text{peak}} \]</div></div></div><div class="fx-row"><div class="fx-lbl">정류(평균)</div><div class="math"><div class="m">\[ \text{반파: } V_{\text{dc}} \approx 0.45\,V_{\text{rms}} \]</div><div class="m">\[ \text{전파: } V_{\text{dc}} \approx 0.9\,V_{\text{rms}} \]</div></div></div><div class="fx-row"><div class="fx-lbl">무부하 평활 피크</div><div class="math"><div class="m">\[ V_{\text{dc(no load)}} = \sqrt{2}\,V_{\text{rms}} \approx 1.414\,V_{\text{rms}} \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(V_{\text{rms}},\ V_{\text{peak}}\)</div><div class="sy-d">교류 실효 전압, 첨두(peak) 전압</div><div class="sy-u">V</div></div><div class="sy"><div class="sy-s">\(V_{\text{dc}}\)</div><div class="sy-d">필터 없이 정류한 직류 평균 전압 (다이오드 순방향 강하 0.7~1.4 V를 빼기 전 값)</div><div class="sy-u">V</div></div><div class="sy"><div class="sy-s">\(V_{\text{dc(no load)}}\)</div><div class="sy-d">평활 커패시터를 단 뒤 무부하 상태의 최고 충전 전압</div><div class="sy-u">V</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>변압기 2차측 AC 12 V를 브리지 다이오드로 정류하고 큰 콘덴서로 평활하면, 무부하 때 전압이 12 V × 1.414 ≈ 17 V까지 올라갑니다. 파워서플라이를 자작할 때 평활 커패시터는 이 피크 전압보다 넉넉한 25~35 V 이상 내압 부품을 골라야 파손을 막을 수 있습니다.</p></div>
+    </article>
+    <article class="fcard" id="f06" data-k="커패시터(C) 결합 · 에너지 저장 · RC 시정수 정전용량, 유전체, 정전 에너지와 직렬·병렬 합성">
+      <header class="fc-hd"><span class="fc-no">06</span><div><h3>커패시터(C) 결합 · 에너지 저장 · RC 시정수</h3><p class="fc-sub">정전용량, 유전체, 정전 에너지와 직렬·병렬 합성</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">정전용량</div><div class="math"><div class="m">\[ C = \frac{Q}{V}, \]</div><div class="m">\[ C = \frac{kA}{d} \quad (k = \varepsilon_0 \varepsilon_r) \]</div></div></div><div class="fx-row"><div class="fx-lbl">병렬 · 2개 직렬</div><div class="math"><div class="m">\[ C_T = C_1 + C_2 + C_3 \]</div><div class="m">\[ C_T = \frac{C_1 C_2}{C_1 + C_2} \]</div></div></div><div class="fx-row"><div class="fx-lbl">에너지 · 시정수</div><div class="math"><div class="m">\[ W_C = \frac{1}{2} C V^2 \]</div><div class="m">\[ \tau = CR \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(C,\ C_T\)</div><div class="sy-d">정전용량 (실제로는 pF = 10⁻¹² F, μF = 10⁻⁶ F)</div><div class="sy-u">F</div></div><div class="sy"><div class="sy-s">\(Q\)</div><div class="sy-d">충전된 전하량</div><div class="sy-u">C (쿨롱)</div></div><div class="sy"><div class="sy-s">\(W_C\)</div><div class="sy-d">전기장에 저장된 에너지</div><div class="sy-u">J</div></div><div class="sy"><div class="sy-s">\(A,\ d\)</div><div class="sy-d">극판 면적, 극판 간격</div><div class="sy-u">m², m</div></div><div class="sy"><div class="sy-s">\(\tau\)</div><div class="sy-d">충·방전 시정수 (목표 전압의 약 63.2 %에 이르는 시간)</div><div class="sy-u">s</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>커패시터는 저항과 반대로 병렬일 때 용량이 더해지고 직렬일 때 줄어듭니다. 고전압 전원부에서 내압을 늘리려고 전해 콘덴서를 직렬로 이을 때는, 소자마다 누설 전류가 달라 한쪽에 전압이 몰리는 것(과전압 파손)을 막도록 같은 값(수십~수백 kΩ)의 <b>전압 균등화 저항(밸런싱 저항)</b>을 각 콘덴서에 병렬로 달아야 합니다.</p></div>
+    </article>
+    <article class="fcard" id="f07" data-k="인덕터(L) 결합 · 자기 에너지 · RL 시정수 인덕턴스의 직렬·병렬 합성과 자기장 에너지">
+      <header class="fc-hd"><span class="fc-no">07</span><div><h3>인덕터(L) 결합 · 자기 에너지 · RL 시정수</h3><p class="fc-sub">인덕턴스의 직렬·병렬 합성과 자기장 에너지</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">직렬</div><div class="math"><div class="m">\[ L_T = L_1 + L_2 + L_3 \]</div></div></div><div class="fx-row"><div class="fx-lbl">병렬</div><div class="math"><div class="m">\[ \frac{1}{L_T} = \frac{1}{L_1} + \frac{1}{L_2} \]</div></div></div><div class="fx-row"><div class="fx-lbl">에너지 · 시정수</div><div class="math"><div class="m">\[ W_L = \frac{1}{2} L I^2 \]</div><div class="m">\[ \tau = \frac{L}{R} \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(L_T,\ L_{1\sim3}\)</div><div class="sy-d">인덕턴스 (μH = 10⁻⁶ H, mH = 10⁻³ H)</div><div class="sy-u">H</div></div><div class="sy"><div class="sy-s">\(W_L\)</div><div class="sy-d">자기장에 저장된 에너지</div><div class="sy-u">J</div></div><div class="sy"><div class="sy-s">\(I\)</div><div class="sy-d">흐르는 전류</div><div class="sy-u">A</div></div><div class="sy"><div class="sy-s">\(\tau\)</div><div class="sy-d">RL 시정수 (전류가 최종값의 약 63.2 %에 이르는 시간)</div><div class="sy-u">s</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>상호 유도가 없다면 인덕터의 직렬·병렬 합성은 저항과 같습니다. 코일은 전류 변화를 방해하므로, CW 송신에서 키를 닫고 열 때 전류가 급하게 오르내리지 않도록 파형을 다듬어 인접 주파수에 ‘딱딱’ 하는 잡음(키 클릭) 혼신을 막는 회로의 바탕이 됩니다.</p></div>
+    </article>
+    <article class="fcard" id="f08" data-k="변압기 권수비 · 트랜지스터 증폭 · PLL 주파수 임피던스 변환(제곱비), 전류 증폭률(β), PLL 분주">
+      <header class="fc-hd"><span class="fc-no">08</span><div><h3>변압기 권수비 · 트랜지스터 증폭 · PLL 주파수</h3><p class="fc-sub">임피던스 변환(제곱비), 전류 증폭률(β), PLL 분주</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">전압 · 전류</div><div class="math"><div class="m">\[ V_S = V_P\,\frac{N_S}{N_P}, \]</div><div class="m">\[ I_P = I_S\,\frac{N_S}{N_P} \]</div></div></div><div class="fx-row"><div class="fx-lbl">임피던스</div><div class="math"><div class="m">\[ Z_P = Z_S \left(\frac{N_P}{N_S}\right)^{2} \]</div></div></div><div class="fx-row"><div class="fx-lbl">트랜지스터</div><div class="math"><div class="m">\[ I_C = \beta\, I_B \]</div></div></div><div class="fx-row"><div class="fx-lbl">PLL</div><div class="math"><div class="m">\[ f_{\text{step}} = \frac{f_{\text{crystal}}}{A}, \]</div><div class="m">\[ f_{\text{out}} = f_{\text{crystal}}\,\frac{N}{A} \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(N_P,\ N_S\)</div><div class="sy-d">1차·2차 코일 감은 횟수</div><div class="sy-u">회</div></div><div class="sy"><div class="sy-s">\(Z_P,\ Z_S\)</div><div class="sy-d">1차·2차 임피던스</div><div class="sy-u">Ω</div></div><div class="sy"><div class="sy-s">\(I_C,\ I_B\)</div><div class="sy-d">컬렉터 전류, 베이스 전류</div><div class="sy-u">A</div></div><div class="sy"><div class="sy-s">\(\beta\ (h_{FE})\)</div><div class="sy-d">직류 전류 증폭률</div><div class="sy-u"></div></div><div class="sy"><div class="sy-s">\(f_{\text{crystal}},\ A,\ N\)</div><div class="sy-d">수정 기준 주파수, PLL 기준 분주비, 가변 분주비</div><div class="sy-u">Hz, —</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>변압기의 임피던스 변환비는 <b>권수비의 제곱</b>입니다. 토로이드 코어에 1차 2회, 2차 14회(권수비 1:7)를 감으면 임피던스는 1:49(50 Ω → 2,450 Ω)로 바뀌며, 이것이 EFHW(종단 급전 반파장) 안테나용 49:1 언언(UNUN)의 설계식입니다.</p></div>
+    </article>
+  </section>
+  <section class="scene" id="s3">
+    <div class="tag">3 · 고주파 · 공식 09–12</div>
+    <h2>고주파 회로, 공진과 주파수 변환</h2>
+    <p class="sec-sub">리액턴스 · 합성 임피던스 · 공진 주파수 · Q · 슈퍼헤테로다인 영상 주파수</p>
+    
+    <article class="fcard" id="f09" data-k="교류 리액턴스(X)와 임피던스(Z) 유도성·용량성 리액턴스와 합성 임피던스">
+      <header class="fc-hd"><span class="fc-no">09</span><div><h3>교류 리액턴스(X)와 임피던스(Z)</h3><p class="fc-sub">유도성·용량성 리액턴스와 합성 임피던스</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">리액턴스</div><div class="math"><div class="m">\[ X_C = \frac{1}{2\pi f C}, \]</div><div class="m">\[ X_L = 2\pi f L \]</div></div></div><div class="fx-row"><div class="fx-lbl">임피던스</div><div class="math"><div class="m">\[ Z = \sqrt{R^2 + X^2} \]</div><div class="m">\[ (X = |X_L - X_C|) \]</div></div></div><div class="fx-row"><div class="fx-lbl">합성 전압</div><div class="math"><div class="m">\[ V_T = \sqrt{V_R^{\,2} + (V_L - V_C)^2} \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(X_C,\ X_L\)</div><div class="sy-d">용량성·유도성 리액턴스</div><div class="sy-u">Ω</div></div><div class="sy"><div class="sy-s">\(Z,\ R\)</div><div class="sy-d">임피던스, 순저항</div><div class="sy-u">Ω</div></div><div class="sy"><div class="sy-s">\(V_R,\ V_L,\ V_C\)</div><div class="sy-d">R·L·C 양단 전압</div><div class="sy-u">V</div></div><div class="sy"><div class="sy-s">\(f,\ L,\ C\)</div><div class="sy-d">주파수, 인덕턴스, 정전용량</div><div class="sy-u">Hz, H, F</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>주파수가 높아지면 코일의 리액턴스(<i>X</i><sub>L</sub>)는 커져 고주파를 막고(RF 초크), 콘덴서의 리액턴스(<i>X</i><sub>C</sub>)는 작아져 고주파를 통과시킵니다(DC 블록, 바이패스). <i>X</i><sub>L</sub> = <i>X</i><sub>C</sub>가 되어 서로 상쇄되면 순 리액턴스가 0이 되는 공진(<i>Z</i> = <i>R</i>) 상태입니다.</p></div>
+    </article>
+    <article class="fcard" id="f10" data-k="LC 공진 주파수 · 파장 · FM 점유 대역폭 LC 동조점, 자유공간 파장, 카슨의 대역폭 법칙">
+      <header class="fc-hd"><span class="fc-no">10</span><div><h3>LC 공진 주파수 · 파장 · FM 점유 대역폭</h3><p class="fc-sub">LC 동조점, 자유공간 파장, 카슨의 대역폭 법칙</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">공진 주파수</div><div class="math"><div class="m">\[ f_0 = \frac{1}{2\pi\sqrt{LC}} \]</div></div></div><div class="fx-row"><div class="fx-lbl">주기 · 파장</div><div class="math"><div class="m">\[ T = \frac{1}{f}, \]</div><div class="m">\[ v = f\lambda \quad (v \approx 3\times 10^{8}\ \text{m/s}) \]</div></div></div><div class="fx-row"><div class="fx-lbl">FM 대역폭</div><div class="math"><div class="m">\[ BW = 2\,(AF_{\max} + \Delta f) \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(f_0\)</div><div class="sy-d">공진 주파수</div><div class="sy-u">Hz</div></div><div class="sy"><div class="sy-s">\(T,\ \lambda\)</div><div class="sy-d">주기, 파장</div><div class="sy-u">s, m</div></div><div class="sy"><div class="sy-s">\(BW\)</div><div class="sy-d">FM 점유 대역폭 (카슨 법칙)</div><div class="sy-u">Hz</div></div><div class="sy"><div class="sy-s">\(AF_{\max},\ \Delta f\)</div><div class="sy-d">최고 오디오 주파수, 최대 주파수 편이</div><div class="sy-u">Hz</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>동조 회로의 공진점과 전파의 파장을 구하는 기본식입니다. 마이크 게인이 지나쳐 주파수 편이(Δ<i>f</i>)가 규격보다 커지면 과편이(overdeviation)로 점유 대역폭(<i>BW</i>)이 넓어져 인접 채널에 혼신(스플래터)을 일으킵니다.</p></div>
+    </article>
+    <article class="fcard" id="f11" data-k="동조 회로 선택도(Q)와 동적 저항(RD) Q 팩터, 통과 대역폭, 병렬 공진의 등가 저항">
+      <header class="fc-hd"><span class="fc-no">11</span><div><h3>동조 회로 선택도(Q)와 동적 저항(R<sub>D</sub>)</h3><p class="fc-sub">Q 팩터, 통과 대역폭, 병렬 공진의 등가 저항</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">Q (직렬)</div><div class="math"><div class="m">\[ Q = \frac{2\pi f L}{R} = \frac{1}{2\pi f C R} \]</div></div></div><div class="fx-row"><div class="fx-lbl">Q와 대역폭</div><div class="math"><div class="m">\[ Q = \frac{f_c}{BW} = \frac{f_c}{f_U - f_L} \]</div></div></div><div class="fx-row"><div class="fx-lbl">병렬 동적 저항</div><div class="math"><div class="m">\[ R_D = \frac{L}{CR}, \]</div><div class="m">\[ Q = 2\pi f C R_D \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(Q\)</div><div class="sy-d">공진 선택도 (무차원)</div><div class="sy-u"></div></div><div class="sy"><div class="sy-s">\(R\)</div><div class="sy-d">코일 손실 저항</div><div class="sy-u">Ω</div></div><div class="sy"><div class="sy-s">\(f_c,\ f_U,\ f_L\)</div><div class="sy-d">중심 주파수, −3 dB 상한·하한 주파수</div><div class="sy-u">Hz</div></div><div class="sy"><div class="sy-s">\(BW\)</div><div class="sy-d">−3 dB 통과 대역폭</div><div class="sy-u">Hz</div></div><div class="sy"><div class="sy-s">\(R_D\)</div><div class="sy-d">병렬 공진 회로의 공진점 등가 저항</div><div class="sy-u">Ω</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>동조 회로가 원하는 주파수만 골라내는 능력(선택도)입니다. <i>Q</i>가 높을수록 필터가 날카로워져 혼신은 잘 막지만 통과 대역폭(<i>BW</i> = <i>f</i><sub>c</sub>/<i>Q</i>)이 좁아집니다. 그래서 소형 마그네틱 루프 안테나는 주파수를 조금만 옮겨도 다시 튜닝해야 합니다.</p></div>
+    </article>
+    <article class="fcard" id="f12" data-k="슈퍼헤테로다인 주파수 변환과 영상 주파수 중간주파수(IF), 국부발진(LO), 영상 혼신">
+      <header class="fc-hd"><span class="fc-no">12</span><div><h3>슈퍼헤테로다인 주파수 변환과 영상 주파수</h3><p class="fc-sub">중간주파수(IF), 국부발진(LO), 영상 혼신</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">중간주파수</div><div class="math"><div class="m">\[ f_{\text{IF}} = |f_{\text{RF}} - f_{\text{LO}}| \]</div><div class="m">\[ (f_{\text{LO}} = f_{\text{RF}} \pm f_{\text{IF}}) \]</div></div></div><div class="fx-row"><div class="fx-lbl">영상 주파수</div><div class="math"><div class="m">\[ f_{\text{image}} = f_{\text{RF}} \pm 2 f_{\text{IF}} \]</div></div></div><div class="fx-row"><div class="fx-lbl">주입 방향</div><div class="math"><div class="m">\[ \text{상측}(f_{\text{LO}} > f_{\text{RF}}): f_{\text{RF}} + 2f_{\text{IF}} \]</div><div class="m">\[ \text{하측}: f_{\text{RF}} - 2f_{\text{IF}} \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(f_{\text{RF}}\)</div><div class="sy-d">수신하려는 신호 주파수</div><div class="sy-u">MHz</div></div><div class="sy"><div class="sy-s">\(f_{\text{LO}}\)</div><div class="sy-d">국부발진기 주파수</div><div class="sy-u">MHz</div></div><div class="sy"><div class="sy-s">\(f_{\text{IF}}\)</div><div class="sy-d">혼합기 출력 중간주파수</div><div class="sy-u">MHz, kHz</div></div><div class="sy"><div class="sy-s">\(f_{\text{image}}\)</div><div class="sy-d">LO를 사이에 두고 대칭 위치에 생기는 영상 혼신 주파수</div><div class="sy-u">MHz</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>수신 14.2 MHz, IF 9.0 MHz, LO 23.2 MHz인 수신기에서는 14.2 + 2×9.0 = <b>32.2 MHz의 외부 신호도 믹서에서 똑같이 9.0 MHz IF로 바뀝니다</b>(32.2 − 23.2 = 9.0). 이 영상 혼신을 막으려고 믹서 앞에 대역통과필터(BPF)를 두거나 1차 IF를 높게(업컨버전) 설계합니다.</p></div>
+    </article>
+  </section>
+  <section class="scene" id="s4">
+    <div class="tag">4 · 안테나 · 공식 13–18</div>
+    <h2>안테나, 급전선, 감쇠기와 ARDF 지향성</h2>
+    <p class="sec-sub">다이폴·야기 절단식 · SWR · 동축 손실 · 1/4파장 정합 · 루프/카디오이드 · T/π 감쇠기</p>
+    
+    <article class="fcard" id="f13" data-k="다이폴 · 수직 안테나와 3소자 야기 설계식 단축률(95 %)을 반영한 절단 길이와 야기 소자 비율">
+      <header class="fc-hd"><span class="fc-no">13</span><div><h3>다이폴 · 수직 안테나와 3소자 야기 설계식</h3><p class="fc-sub">단축률(95 %)을 반영한 절단 길이와 야기 소자 비율</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">λ/2 다이폴 · λ/4 수직</div><div class="math"><div class="m">\[ L\,[\text{m}] = \frac{142.5}{f\,[\text{MHz}]} \]</div><div class="m">\[ L\,[\text{m}] = \frac{71.25}{f\,[\text{MHz}]} \]</div></div></div><div class="fx-row"><div class="fx-lbl">야기 반사기 · 도파기</div><div class="math"><div class="m">\[ L_{\text{ref}} \approx \frac{150}{f}\ (+5\,\%) \]</div><div class="m">\[ L_{\text{dir}} \approx \frac{135}{f}\ (-5\,\%) \]</div></div></div><p class="fx-note">야기 소자 간격 0.15λ~0.20λ · 예: 145 MHz 3소자 → <i>L</i><sub>ref</sub> 103 cm, <i>L</i><sub>drv</sub> 98 cm, <i>L</i><sub>dir</sub> 93 cm</p></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(L,\ L_{\text{drv}}\)</div><div class="sy-d">반파장 다이폴, 야기 복사기 전체 길이</div><div class="sy-u">m</div></div><div class="sy"><div class="sy-s">\(L_{\text{ref}},\ L_{\text{dir}}\)</div><div class="sy-d">야기 반사기(유도성), 도파기(용량성) 길이</div><div class="sy-u">m</div></div><div class="sy"><div class="sy-s">\(f\)</div><div class="sy-d">설계 중심 주파수</div><div class="sy-u">MHz</div></div><div class="sy"><div class="sy-s">\(0.95\)</div><div class="sy-d">끝단 효과·피복에 의한 단축 계수</div><div class="sy-u"></div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>진공 반파장(150/<i>f</i>) 그대로 자르면 끝단 정전용량 때문에 공진점이 내려가므로 5 % 줄인 <b>142.5/<i>f</i></b>를 씁니다. 야기는 복사기 뒤에 약 5 % 긴 반사기를, 앞에 약 5 % 짧은 도파기를 두어 앞쪽으로 위상을 보강하고 뒤쪽 방사를 줄입니다.</p></div>
+    </article>
+    <article class="fcard" id="f14" data-k="반사계수(Γ) · 정재파비(SWR) · 반사 손실 부정합 반사 전력 비율, SWR, 리턴 로스">
+      <header class="fc-hd"><span class="fc-no">14</span><div><h3>반사계수(Γ) · 정재파비(SWR) · 반사 손실</h3><p class="fc-sub">부정합 반사 전력 비율, SWR, 리턴 로스</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">반사계수</div><div class="math"><div class="m">\[ |\Gamma| = \frac{|Z_L - Z_0|}{|Z_L + Z_0|} = \frac{\text{SWR} - 1}{\text{SWR} + 1}, \]</div><div class="m">\[ \frac{P_r}{P_f} = |\Gamma|^2 \]</div></div></div><div class="fx-row"><div class="fx-lbl">SWR</div><div class="math"><div class="m">\[ \text{SWR} = \frac{1 + |\Gamma|}{1 - |\Gamma|} \]</div><div class="m">\[ = \frac{V_{\max}}{V_{\min}} = \frac{V_f + V_r}{V_f - V_r} \]</div></div></div><div class="fx-row"><div class="fx-lbl">리턴 로스</div><div class="math"><div class="m">\[ \text{RL} = -20\log_{10}|\Gamma| \]</div><div class="m">\[ = 10\log_{10}\frac{P_f}{P_r}\ \text{dB} \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(|\Gamma|\)</div><div class="sy-d">전압 반사계수의 크기 (0 ≤ |Γ| ≤ 1)</div><div class="sy-u"></div></div><div class="sy"><div class="sy-s">\(\text{SWR}\)</div><div class="sy-d">전압 정재파비</div><div class="sy-u"></div></div><div class="sy"><div class="sy-s">\(P_f,\ P_r\)</div><div class="sy-d">진행파 전력, 반사파 전력</div><div class="sy-u">W</div></div><div class="sy"><div class="sy-s">\(Z_L,\ Z_0\)</div><div class="sy-d">안테나 부하 임피던스, 급전선 특성 임피던스 (보통 50 Ω)</div><div class="sy-u">Ω</div></div></div></div>
+      <div class="qrefs"><div class="qref"><div class="qcap">SWR별 빠른 참고 (15번 부정합 손실 포함)</div><div class="table-wrap"><table><thead><tr><th>SWR</th><th>|Γ|</th><th>반사 전력</th><th>리턴 로스</th><th>부정합 손실</th></tr></thead><tbody><tr><td>1.0</td><td>0</td><td>0 %</td><td>∞</td><td>0 dB</td></tr><tr><td>1.5</td><td>0.20</td><td>4.0 %</td><td>14.0 dB</td><td>0.18 dB</td></tr><tr><td>2.0</td><td>0.33</td><td>11.1 %</td><td>9.5 dB</td><td>0.51 dB</td></tr><tr><td>3.0</td><td>0.50</td><td>25.0 %</td><td>6.0 dB</td><td>1.25 dB</td></tr></tbody></table></div></div></div>
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>임피던스 부정합으로 되돌아오는 전력의 비율을 판정하는 공식입니다. 위 표처럼 SWR 1.5는 반사 전력 4 %, SWR 2.0은 11.1 %, SWR 3.0은 25 %입니다.</p></div>
+    </article>
+    <article class="fcard" id="f15" data-k="동축 케이블 감쇠 손실과 부정합 손실 길이·주파수별 감쇠량과 SWR에 따른 전달 손실">
+      <header class="fc-hd"><span class="fc-no">15</span><div><h3>동축 케이블 감쇠 손실과 부정합 손실</h3><p class="fc-sub">길이·주파수별 감쇠량과 SWR에 따른 전달 손실</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">케이블 정합 손실</div><div class="math"><div class="m">\[ L_{\text{coax}}\,[\text{dB}] = \alpha_{100\text{m}} \times \frac{l\,[\text{m}]}{100} \]</div><div class="m">\[ (\alpha \propto \sqrt{f}) \]</div></div></div><div class="fx-row"><div class="fx-lbl">부정합 손실</div><div class="math"><div class="m">\[ L_{\text{mismatch}}\,[\text{dB}] = -10\log_{10}\!\left(1 - |\Gamma|^2\right) \]</div></div></div><div class="fx-row"><div class="fx-lbl">전달 전력비</div><div class="math"><div class="m">\[ \frac{P_{\text{delivered}}}{P_{\text{incident}}} = 1 - |\Gamma|^2 \]</div><div class="m">\[ = 1 - \left(\frac{\text{SWR}-1}{\text{SWR}+1}\right)^{2} \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(\alpha_{100\text{m}}\)</div><div class="sy-d">해당 주파수에서 100 m당 정합 감쇠량 (제조사 규격)</div><div class="sy-u">dB/100 m</div></div><div class="sy"><div class="sy-s">\(l\)</div><div class="sy-d">케이블 실제 길이</div><div class="sy-u">m</div></div><div class="sy"><div class="sy-s">\(|\Gamma|\)</div><div class="sy-d">급전점 전압 반사계수</div><div class="sy-u"></div></div><div class="sy"><div class="sy-s">\(L_{\text{mismatch}}\)</div><div class="sy-d">반사 때문에 부하에 전달되지 못하는 손실</div><div class="sy-u">dB</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>동축 케이블 손실은 표피 효과 때문에 주파수의 제곱근(√<i>f</i>)에 비례해 커집니다. SWR이 높으면 부정합 손실(SWR 2.0에서 약 0.51 dB, 3.0에서 약 1.25 dB)뿐 아니라, 반사파가 케이블 안을 오가며 열로 사라지는 추가 손실도 크게 늘어납니다.</p></div>
+    </article>
+    <article class="fcard" id="f16" data-k="동축선 특성 임피던스 · 속도계수 · 1/4파장 정합 직경비(D/d), 속도계수(VF), 1/4파장 변환기">
+      <header class="fc-hd"><span class="fc-no">16</span><div><h3>동축선 특성 임피던스 · 속도계수 · 1/4파장 정합</h3><p class="fc-sub">직경비(D/d), 속도계수(VF), 1/4파장 변환기</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">특성 임피던스 · 속도계수</div><div class="math"><div class="m">\[ Z_0 = \frac{138}{\sqrt{\varepsilon_r}}\,\log_{10}\frac{D}{d}, \]</div><div class="m">\[ VF = \frac{1}{\sqrt{\varepsilon_r}} \]</div></div></div><div class="fx-row"><div class="fx-lbl">선로 파장</div><div class="math"><div class="m">\[ \lambda_{\text{line}} = \lambda_0 \times VF \]</div></div></div><div class="fx-row"><div class="fx-lbl">1/4파장 정합</div><div class="math"><div class="m">\[ Z_0 = \sqrt{Z_{\text{in}} \times Z_{\text{out}}} \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(D,\ d\)</div><div class="sy-d">실드 안지름, 중심 도체 바깥지름</div><div class="sy-u">mm</div></div><div class="sy"><div class="sy-s">\(\varepsilon_r\)</div><div class="sy-d">절연체 비유전율 (솔리드 PE ≈ 2.25, 발포 PE ≈ 1.4~1.55)</div><div class="sy-u"></div></div><div class="sy"><div class="sy-s">\(VF\)</div><div class="sy-d">속도계수 (RG-58·RG-213 ≈ 0.66, 발포 동축 ≈ 0.80~0.85)</div><div class="sy-u"></div></div><div class="sy"><div class="sy-s">\(\lambda_0,\ \lambda_{\text{line}}\)</div><div class="sy-d">자유공간 파장, 케이블 안 파장</div><div class="sy-u">m</div></div><div class="sy"><div class="sy-s">\(Z_{\text{in}},\ Z_{\text{out}}\)</div><div class="sy-d">정합할 양쪽 임피던스</div><div class="sy-u">Ω</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>케이블 안에서는 절연체 때문에 전파가 진공보다 느리게 갑니다. 동축선으로 1/4파장 스터브나 발룬 위상선을 자를 때는 반드시 자유공간 파장에 속도계수(<i>VF</i>)를 곱해야 합니다. 75 Ω 케이블 λ/4 구간을 끼우면 50 Ω 급전선과 약 112 Ω 루프 안테나를 간단히 정합할 수 있습니다(√(50×112) ≈ 75).</p></div>
+    </article>
+    <article class="fcard" id="f17" data-k="ARDF 방향탐지 루프와 카디오이드 지향성 8자형 양방향 패턴(cos θ)과 센스 안테나 결합 단일 영점">
+      <header class="fc-hd"><span class="fc-no">17</span><div><h3>ARDF 방향탐지 루프와 카디오이드 지향성</h3><p class="fc-sub">8자형 양방향 패턴(cos θ)과 센스 안테나 결합 단일 영점</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">소형 루프 (8자형)</div><div class="math"><div class="m">\[ E_{\text{loop}}(\theta) = E_0\,|\cos\theta| \]</div></div></div><div class="fx-row"><div class="fx-lbl">센스 결합 (심장형)</div><div class="math"><div class="m">\[ E_{\text{cardioid}}(\theta) = E_0\,(1 + \cos\theta) \]</div></div></div></div>
+      <figure class="fig"><svg viewBox="-36 0 572 270" role="img" aria-label="소형 루프의 8자형 패턴과 센스 안테나를 합성한 카디오이드 패턴"><g><circle cx="110" cy="112" r="82" fill="none" stroke="#dde3ec"/><circle cx="110" cy="112" r="41.0" fill="none" stroke="#dde3ec" stroke-dasharray="3 3"/><line x1="20" y1="112" x2="200" y2="112" stroke="#c9d1dc"/><line x1="110" y1="22" x2="110" y2="202" stroke="#c9d1dc"/><path d="M192.0,112.0 L191.9,109.1 L191.6,106.3 L191.1,103.5 L190.4,100.7 L189.5,98.0 L188.5,95.3 L187.2,92.8 L185.8,90.3 L184.2,87.9 L182.4,85.6 L180.5,83.5 L178.4,81.5 L176.2,79.7 L173.9,78.0 L171.5,76.5 L169.0,75.1 L166.4,74.0 L163.7,73.0 L160.9,72.2 L158.1,71.6 L155.3,71.2 L152.4,71.0 L149.6,71.0 L146.7,71.2 L143.9,71.6 L141.1,72.2 L138.3,73.0 L135.6,74.0 L133.0,75.1 L130.5,76.5 L128.1,78.0 L125.8,79.7 L123.6,81.5 L121.5,83.5 L119.6,85.6 L117.8,87.9 L116.2,90.3 L114.8,92.8 L113.5,95.3 L112.5,98.0 L111.6,100.7 L110.9,103.5 L110.4,106.3 L110.1,109.1 L110.0,112.0 L109.9,109.1 L109.6,106.3 L109.1,103.5 L108.4,100.7 L107.5,98.0 L106.5,95.3 L105.2,92.8 L103.8,90.3 L102.2,87.9 L100.4,85.6 L98.5,83.5 L96.4,81.5 L94.2,79.7 L91.9,78.0 L89.5,76.5 L87.0,75.1 L84.4,74.0 L81.7,73.0 L78.9,72.2 L76.1,71.6 L73.3,71.2 L70.4,71.0 L67.6,71.0 L64.7,71.2 L61.9,71.6 L59.1,72.2 L56.3,73.0 L53.6,74.0 L51.0,75.1 L48.5,76.5 L46.1,78.0 L43.8,79.7 L41.6,81.5 L39.5,83.5 L37.6,85.6 L35.8,87.9 L34.2,90.3 L32.8,92.8 L31.5,95.3 L30.5,98.0 L29.6,100.7 L28.9,103.5 L28.4,106.3 L28.1,109.1 L28.0,112.0 L28.1,114.9 L28.4,117.7 L28.9,120.5 L29.6,123.3 L30.5,126.0 L31.5,128.7 L32.8,131.2 L34.2,133.7 L35.8,136.1 L37.6,138.4 L39.5,140.5 L41.6,142.5 L43.8,144.3 L46.1,146.0 L48.5,147.5 L51.0,148.9 L53.6,150.0 L56.3,151.0 L59.1,151.8 L61.9,152.4 L64.7,152.8 L67.6,153.0 L70.4,153.0 L73.3,152.8 L76.1,152.4 L78.9,151.8 L81.7,151.0 L84.4,150.0 L87.0,148.9 L89.5,147.5 L91.9,146.0 L94.2,144.3 L96.4,142.5 L98.5,140.5 L100.4,138.4 L102.2,136.1 L103.8,133.7 L105.2,131.2 L106.5,128.7 L107.5,126.0 L108.4,123.3 L109.1,120.5 L109.6,117.7 L109.9,114.9 L110.0,112.0 L110.1,114.9 L110.4,117.7 L110.9,120.5 L111.6,123.3 L112.5,126.0 L113.5,128.7 L114.8,131.2 L116.2,133.7 L117.8,136.1 L119.6,138.4 L121.5,140.5 L123.6,142.5 L125.8,144.3 L128.1,146.0 L130.5,147.5 L133.0,148.9 L135.6,150.0 L138.3,151.0 L141.1,151.8 L143.9,152.4 L146.7,152.8 L149.6,153.0 L152.4,153.0 L155.3,152.8 L158.1,152.4 L160.9,151.8 L163.7,151.0 L166.4,150.0 L169.0,148.9 L171.5,147.5 L173.9,146.0 L176.2,144.3 L178.4,142.5 L180.5,140.5 L182.4,138.4 L184.2,136.1 L185.8,133.7 L187.2,131.2 L188.5,128.7 L189.5,126.0 L190.4,123.3 L191.1,120.5 L191.6,117.7 L191.9,114.9 L192.0,112.0Z" fill="#1f63c6" fill-opacity=".12" stroke="#1f63c6" stroke-width="2.2"/><text x="202" y="106" font-size="11" fill="#5f6b7d">0°</text><text x="114" y="20" font-size="11" fill="#5f6b7d">90°</text><text x="-6" y="106" font-size="11" fill="#5f6b7d">180°</text><text x="114" y="212" font-size="11" fill="#5f6b7d">270°</text><line x1="110" y1="112" x2="110.0" y2="30.0" stroke="#c2185b" stroke-width="2" stroke-dasharray="5 4"/><circle cx="110.0" cy="30.0" r="4.5" fill="#fff" stroke="#c2185b" stroke-width="2"/><line x1="110" y1="112" x2="110.0" y2="194.0" stroke="#c2185b" stroke-width="2" stroke-dasharray="5 4"/><circle cx="110.0" cy="194.0" r="4.5" fill="#fff" stroke="#c2185b" stroke-width="2"/><text x="110" y="234" text-anchor="middle" font-size="13" font-weight="600" fill="#141b26">루프: 8자형 · 영점 2개</text></g><g><circle cx="390" cy="112" r="82" fill="none" stroke="#dde3ec"/><circle cx="390" cy="112" r="41.0" fill="none" stroke="#dde3ec" stroke-dasharray="3 3"/><line x1="300" y1="112" x2="480" y2="112" stroke="#c9d1dc"/><line x1="390" y1="22" x2="390" y2="202" stroke="#c9d1dc"/><path d="M472.0,112.0 L471.9,109.1 L471.7,106.3 L471.3,103.5 L470.8,100.6 L470.1,97.9 L469.3,95.1 L468.4,92.5 L467.3,89.8 L466.1,87.3 L464.7,84.8 L463.3,82.4 L461.7,80.1 L460.0,77.9 L458.2,75.8 L456.3,73.7 L454.3,71.8 L452.2,70.1 L450.0,68.4 L447.8,66.9 L445.5,65.5 L443.1,64.2 L440.7,63.0 L438.3,62.0 L435.8,61.1 L433.3,60.4 L430.8,59.8 L428.3,59.3 L425.7,59.0 L423.2,58.8 L420.8,58.7 L418.3,58.8 L415.9,59.0 L413.5,59.3 L411.1,59.7 L408.8,60.3 L406.6,61.0 L404.4,61.7 L402.3,62.6 L400.3,63.6 L398.4,64.6 L396.5,65.7 L394.7,67.0 L393.1,68.2 L391.5,69.6 L390.0,71.0 L388.6,72.5 L387.3,74.0 L386.2,75.5 L385.1,77.0 L384.1,78.6 L383.2,80.2 L382.5,81.8 L381.8,83.5 L381.2,85.1 L380.8,86.6 L380.4,88.2 L380.1,89.8 L379.9,91.3 L379.8,92.8 L379.8,94.2 L379.8,95.7 L379.9,97.0 L380.1,98.3 L380.3,99.6 L380.6,100.8 L380.9,101.9 L381.3,103.0 L381.7,104.0 L382.2,105.0 L382.7,105.8 L383.2,106.6 L383.7,107.4 L384.2,108.1 L384.7,108.7 L385.2,109.3 L385.8,109.7 L386.3,110.2 L386.8,110.6 L387.2,110.9 L387.7,111.2 L388.1,111.4 L388.5,111.6 L388.8,111.7 L389.1,111.8 L389.4,111.9 L389.6,111.9 L389.8,112.0 L389.9,112.0 L390.0,112.0 L390.0,112.0 L390.0,112.0 L389.9,112.0 L389.8,112.0 L389.6,112.1 L389.4,112.1 L389.1,112.2 L388.8,112.3 L388.5,112.4 L388.1,112.6 L387.7,112.8 L387.2,113.1 L386.8,113.4 L386.3,113.8 L385.8,114.3 L385.2,114.7 L384.7,115.3 L384.2,115.9 L383.7,116.6 L383.2,117.4 L382.7,118.2 L382.2,119.0 L381.7,120.0 L381.3,121.0 L380.9,122.1 L380.6,123.2 L380.3,124.4 L380.1,125.7 L379.9,127.0 L379.8,128.3 L379.8,129.8 L379.8,131.2 L379.9,132.7 L380.1,134.2 L380.4,135.8 L380.8,137.4 L381.2,138.9 L381.8,140.5 L382.5,142.2 L383.2,143.8 L384.1,145.4 L385.1,147.0 L386.2,148.5 L387.3,150.0 L388.6,151.5 L390.0,153.0 L391.5,154.4 L393.1,155.8 L394.7,157.0 L396.5,158.3 L398.4,159.4 L400.3,160.4 L402.3,161.4 L404.4,162.3 L406.6,163.0 L408.8,163.7 L411.1,164.3 L413.5,164.7 L415.9,165.0 L418.3,165.2 L420.8,165.3 L423.2,165.2 L425.7,165.0 L428.3,164.7 L430.8,164.2 L433.3,163.6 L435.8,162.9 L438.3,162.0 L440.7,161.0 L443.1,159.8 L445.5,158.5 L447.8,157.1 L450.0,155.6 L452.2,153.9 L454.3,152.2 L456.3,150.3 L458.2,148.2 L460.0,146.1 L461.7,143.9 L463.3,141.6 L464.7,139.2 L466.1,136.7 L467.3,134.2 L468.4,131.5 L469.3,128.9 L470.1,126.1 L470.8,123.4 L471.3,120.5 L471.7,117.7 L471.9,114.9 L472.0,112.0Z" fill="#c2185b" fill-opacity=".12" stroke="#c2185b" stroke-width="2.2"/><text x="482" y="106" font-size="11" fill="#5f6b7d">0°</text><text x="394" y="20" font-size="11" fill="#5f6b7d">90°</text><text x="274" y="106" font-size="11" fill="#5f6b7d">180°</text><text x="394" y="212" font-size="11" fill="#5f6b7d">270°</text><line x1="390" y1="112" x2="308.0" y2="112.0" stroke="#c2185b" stroke-width="2" stroke-dasharray="5 4"/><circle cx="308.0" cy="112.0" r="4.5" fill="#fff" stroke="#c2185b" stroke-width="2"/><text x="390" y="234" text-anchor="middle" font-size="13" font-weight="600" fill="#141b26">루프 + 센스: 카디오이드 · 영점 1개</text></g></svg><figcaption>빨간 점선이 영점(신호가 사라지는 방향)입니다. 루프는 90°·270° 두 방향에서, 카디오이드는 180° 한 방향에서만 신호가 사라집니다.</figcaption></figure>
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(\theta\)</div><div class="sy-d">전파가 오는 방향과 루프 면(페라이트 로드라면 축에 수직인 면)이 이루는 방위각</div><div class="sy-u">°</div></div><div class="sy"><div class="sy-s">\(E_{\text{loop}}\)</div><div class="sy-d">소형 루프에 유기되는 전압 (8자형 양방향)</div><div class="sy-u">V</div></div><div class="sy"><div class="sy-s">\(E_{\text{cardioid}}\)</div><div class="sy-d">무지향 수직 센스 안테나를 90° 위상으로 합성한 심장형 특성</div><div class="sy-u">V</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>3.5 MHz(80 m) ARDF 수신기의 루프·페라이트 안테나는 신호가 가장 센 방향(θ = 0°)보다 <b>신호가 갑자기 사라지는 영점(θ = 90°, 270°)이 훨씬 날카로워 방위를 정밀하게 잡기에 좋습니다</b>. 다만 루프만으로는 앞뒤가 구분되지 않으므로 휩(센스) 안테나를 합성한 카디오이드(1 + cos θ) 패턴으로 앞뒤를 판정합니다.</p></div>
+    </article>
+    <article class="fcard" id="f18" data-k="대칭형 고주파 감쇠기 (T형 · π형 패드) 특성 임피던스(Z₀)를 유지하며 신호를 줄이는 저항값">
+      <header class="fc-hd"><span class="fc-no">18</span><div><h3>대칭형 고주파 감쇠기 (T형 · π형 패드)</h3><p class="fc-sub">특성 임피던스(Z₀)를 유지하며 신호를 줄이는 저항값</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">전압 감쇠 배수</div><div class="math"><div class="m">\[ K = 10^{\,A\,[\text{dB}]/20} = \frac{V_{\text{in}}}{V_{\text{out}}} \]</div></div></div><div class="fx-row"><div class="fx-lbl">T형 패드</div><div class="math"><div class="m">\[ R_1 = Z_0\,\frac{K - 1}{K + 1}, \]</div><div class="m">\[ R_2 = 2Z_0\,\frac{K}{K^2 - 1} \]</div></div></div><div class="fx-row"><div class="fx-lbl">π형 패드</div><div class="math"><div class="m">\[ R_A = Z_0\,\frac{K + 1}{K - 1}, \]</div><div class="m">\[ R_B = \frac{Z_0}{2}\cdot\frac{K^2 - 1}{K} \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(A,\ K\)</div><div class="sy-d">목표 감쇠량, 선형 전압 감쇠 배수 (6 dB → K ≈ 2, 20 dB → K = 10)</div><div class="sy-u">dB, —</div></div><div class="sy"><div class="sy-s">\(R_1,\ R_2\)</div><div class="sy-d">T형: 양쪽 직렬 저항 2개(R₁), 가운데 접지 저항 1개(R₂)</div><div class="sy-u">Ω</div></div><div class="sy"><div class="sy-s">\(R_A,\ R_B\)</div><div class="sy-d">π형: 양쪽 접지 저항 2개(R_A), 가운데 직렬 저항 1개(R_B)</div><div class="sy-u">Ω</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>50 Ω 정합을 깨지 않고 수신 입력이나 송신 출력을 줄일 때 씁니다. 예를 들어 <b>50 Ω 6 dB(전력 1/4, <i>K</i> = 2) 감쇠기</b>는 T형이면 직렬 <i>R</i><sub>1</sub> = 16.7 Ω 2개와 접지 <i>R</i><sub>2</sub> = 66.7 Ω 1개, π형이면 접지 <i>R</i><sub>A</sub> = 150 Ω 2개와 직렬 <i>R</i><sub>B</sub> = 37.5 Ω 1개로 만들 수 있습니다.</p></div>
+    </article>
+  </section>
+  <section class="scene" id="s5">
+    <div class="tag">5 · 데시벨 · 공식 19–20</div>
+    <h2>신호 세기, 데시벨과 전계 강도</h2>
+    <p class="sec-sub">전력·전압 dB · 절대 전력 dBm · S-미터 · 안테나 이득(dBd/dBi) · ERP와 EIRP</p>
+    
+    <article class="fcard" id="f19" data-k="데시벨(dB) 변환 · 절대 전력(dBm) · S-미터 전력·전압 비, 1 mW 기준 절대 전력, IARU S9 기준">
+      <header class="fc-hd"><span class="fc-no">19</span><div><h3>데시벨(dB) 변환 · 절대 전력(dBm) · S-미터</h3><p class="fc-sub">전력·전압 비, 1 mW 기준 절대 전력, IARU S9 기준</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">전력 · 전압 dB</div><div class="math"><div class="m">\[ 10\log_{10}\frac{P_2}{P_1} \]</div><div class="m">\[ 20\log_{10}\frac{V_2}{V_1} \]</div></div></div><div class="fx-row"><div class="fx-lbl">절대 전력</div><div class="math"><div class="m">\[ P\,[\text{dBm}] = 10\log_{10}\frac{P\,[\text{mW}]}{1\ \text{mW}} \]</div></div></div><p class="fx-note">IARU S9 기준 · HF = −73 dBm (50 μV), VHF = −93 dBm (5 μV) · <b>1 S-단위 = 6 dB</b></p></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(\text{dB}\)</div><div class="sy-d">전력·전압의 상대적인 비를 나타내는 로그 단위</div><div class="sy-u"></div></div><div class="sy"><div class="sy-s">\(\text{dBm}\)</div><div class="sy-d">1 mW를 0 dBm으로 잡은 절대 전력 단위</div><div class="sy-u"></div></div><div class="sy"><div class="sy-s">\(\text{S}\)</div><div class="sy-d">수신 신호 세기 눈금 (S1~S9, 한 눈금 6 dB = 전력 4배)</div><div class="sy-u"></div></div></div></div>
+      <div class="qrefs"><div class="qref"><div class="qcap">dB ↔ 배수</div><div class="table-wrap"><table><thead><tr><th>dB</th><th>전력</th><th>전압</th></tr></thead><tbody><tr><td>+3</td><td>×2</td><td>×1.41</td></tr><tr><td>+6</td><td>×4</td><td>×2</td></tr><tr><td>+10</td><td>×10</td><td>×3.16</td></tr><tr><td>+20</td><td>×100</td><td>×10</td></tr></tbody></table></div></div><div class="qref"><div class="qcap">출력 ↔ dBm</div><div class="table-wrap"><table><thead><tr><th>출력</th><th>dBm</th></tr></thead><tbody><tr><td>1 mW</td><td>0</td></tr><tr><td>1 W</td><td>+30</td></tr><tr><td>5 W (QRP)</td><td>+37</td></tr><tr><td>100 W</td><td>+50</td></tr></tbody></table></div></div></div>
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>실무 암산의 기본입니다. <b>+3 dB = 전력 2배</b>, <b>+6 dB = 전력 4배(전압 2배, S-미터 한 눈금)</b>, <b>+10 dB = 전력 10배</b>, <b>+20 dB = 전력 100배(전압 10배)</b>입니다.</p></div>
+    </article>
+    <article class="fcard" id="f20" data-k="안테나 이득(dBd · dBi) · ERP/EIRP · 전계 강도 다이폴·등방성 기준 이득, 실효 방사 전력, 전계 강도">
+      <header class="fc-hd"><span class="fc-no">20</span><div><h3>안테나 이득(dBd · dBi) · ERP/EIRP · 전계 강도</h3><p class="fc-sub">다이폴·등방성 기준 이득, 실효 방사 전력, 전계 강도</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">이득</div><div class="math"><div class="m">\[ G\,[\text{dBd}] = 10\log_{10}\frac{P_{\text{antenna}}}{P_{\text{dipole}}}, \]</div><div class="m">\[ \text{dBi} = \text{dBd} + 2.15 \]</div></div></div><div class="fx-row"><div class="fx-lbl">ERP · EIRP</div><div class="math"><div class="m">\[ \text{ERP} = P_{\text{in}} \times G_{\text{dipole}}, \]</div><div class="m">\[ \text{EIRP} = P_{\text{in}} \times G_{\text{iso}} \]</div><div class="m">\[ = 1.64 \times \text{ERP} \]</div></div></div><div class="fx-row"><div class="fx-lbl">전계 강도</div><div class="math"><div class="m">\[ E\,[\text{V/m}] = \frac{7\sqrt{\text{ERP}}}{d} \]</div><div class="m">\[ = \frac{5.5\sqrt{\text{EIRP}}}{d} \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(\text{dBd},\ \text{dBi}\)</div><div class="sy-d">반파장 다이폴 기준 이득, 등방성 기준 이득 (다이폴 = 2.15 dBi)</div><div class="sy-u">dB</div></div><div class="sy"><div class="sy-s">\(\text{ERP},\ \text{EIRP}\)</div><div class="sy-d">다이폴 대비 실효 방사 전력, 등방성 대비 등가 방사 전력</div><div class="sy-u">W</div></div><div class="sy"><div class="sy-s">\(P_{\text{in}}\)</div><div class="sy-d">급전선 손실을 뺀 안테나 입력 전력</div><div class="sy-u">W</div></div><div class="sy"><div class="sy-s">\(E,\ d\)</div><div class="sy-d">전계 강도, 안테나로부터의 거리</div><div class="sy-u">V/m, m</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>급전선 손실을 뺀 안테나 입력 전력에 선형 이득을 곱한 실제 방사 세기입니다. <b>영국 Ofcom 아마추어 허가 조건에서 전자파 노출(EMF) 평가 기준선인 10 W EIRP는 약 6.1 W ERP</b>(10 / 1.64)에 해당합니다. 국내 무선국은 과학기술정보통신부 고시 「전자파강도 측정기준」과 「전자파인체보호기준」을 따릅니다.</p></div>
+    </article>
+  </section>
+  <section class="scene" id="s6">
+    <div class="tag">6 · 전파와 수신기 · 공식 21–24</div>
+    <h2>전파 전파와 수신기 성능</h2>
+    <p class="sec-sub">자유공간 경로 손실 · 전파 가시거리 · 프레넬 존 · MUF · 열잡음 · IIP3</p>
+    
+    <article class="fcard" id="f21" data-k="자유공간 경로 손실(FSPL)과 링크 버짓 거리·주파수별 공간 감쇠와 수신 전력 계산">
+      <header class="fc-hd"><span class="fc-no">21</span><div><h3>자유공간 경로 손실(FSPL)과 링크 버짓</h3><p class="fc-sub">거리·주파수별 공간 감쇠와 수신 전력 계산</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">자유공간 경로 손실</div><div class="math"><div class="m">\[ \text{FSPL}\,[\text{dB}] = 20\log_{10} d \]</div><div class="m">\[ + 20\log_{10} f + 32.44 \]</div></div></div><div class="fx-row"><div class="fx-lbl">링크 버짓</div><div class="math"><div class="m">\[ P_{\text{rx}} = P_{\text{tx}} + G_{\text{tx}} - L_{\text{cable}} \]</div><div class="m">\[ - \text{FSPL} + G_{\text{rx}} - L_{\text{rx}} \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(\text{FSPL}\)</div><div class="sy-d">자유공간 경로 손실</div><div class="sy-u">dB</div></div><div class="sy"><div class="sy-s">\(d,\ f\)</div><div class="sy-d">송수신 거리, 주파수 (<b>km, MHz로 넣음</b>)</div><div class="sy-u">km, MHz</div></div><div class="sy"><div class="sy-s">\(P_{\text{tx}},\ P_{\text{rx}}\)</div><div class="sy-d">송신 출력, 수신 입력 전력</div><div class="sy-u">dBm</div></div><div class="sy"><div class="sy-s">\(G,\ L\)</div><div class="sy-d">안테나 이득, 급전선 손실</div><div class="sy-u">dBi, dB</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>거리가 2배가 되거나 주파수가 2배가 될 때마다 공간 감쇠가 6 dB(전력 1/4)씩 늘어납니다. 아마추어 위성 교신이나 마이크로웨이브 산악 링크를 설계할 때 수신기에 실제로 들어올 신호 크기(<i>P</i><sub>rx</sub>)를 미리 계산하는 식입니다.</p></div>
+    </article>
+    <article class="fcard" id="f22" data-k="전파 가시거리와 제1 프레넬 영역 대기 굴절(K = 4/3)을 반영한 통달 거리와 회절 여유">
+      <header class="fc-hd"><span class="fc-no">22</span><div><h3>전파 가시거리와 제1 프레넬 영역</h3><p class="fc-sub">대기 굴절(K = 4/3)을 반영한 통달 거리와 회절 여유</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">한쪽 가시거리</div><div class="math"><div class="m">\[ d\,[\text{km}] \approx 4.12\,\sqrt{h\,[\text{m}]} \]</div></div></div><div class="fx-row"><div class="fx-lbl">양쪽 최대 거리</div><div class="math"><div class="m">\[ D_{\max}\,[\text{km}] \approx 4.12\left(\sqrt{h_1} + \sqrt{h_2}\right) \]</div></div></div><div class="fx-row"><div class="fx-lbl">제1 프레넬 반경</div><div class="math"><div class="m">\[ R_1\,[\text{m}] = 17.32\,\sqrt{\frac{d_1 \times d_2}{f\,[\text{GHz}] \times D}} \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(h_1,\ h_2\)</div><div class="sy-d">양쪽 안테나 높이</div><div class="sy-u">m</div></div><div class="sy"><div class="sy-s">\(d,\ D_{\max}\)</div><div class="sy-d">전파 가시거리</div><div class="sy-u">km</div></div><div class="sy"><div class="sy-s">\(d_1,\ d_2,\ D\)</div><div class="sy-d">양 끝에서 장애물까지 거리, 전체 거리 (D = d₁ + d₂)</div><div class="sy-u">km</div></div><div class="sy"><div class="sy-s">\(f,\ R_1\)</div><div class="sy-d">주파수, 장애물 지점의 제1 프레넬 반경</div><div class="sy-u">GHz, m</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>전파는 대기 굴절 덕분에 눈으로 보이는 거리(계수 3.57)보다 약 15 % 더 멀리 갑니다(계수 4.12). 산 능선 너머로 VHF/UHF 교신을 할 때는 직선 시야만 트여 있다고 끝이 아니라, 제1 프레넬 반경(<i>R</i><sub>1</sub>)의 60 % 이상이 능선에 가리지 않아야 회절 손실을 피할 수 있습니다.</p></div>
+    </article>
+    <article class="fcard" id="f23" data-k="전리층 임계 주파수와 최고 사용 주파수(MUF) 시컨트 법칙과 최적 사용 주파수(FOT)">
+      <header class="fc-hd"><span class="fc-no">23</span><div><h3>전리층 임계 주파수와 최고 사용 주파수(MUF)</h3><p class="fc-sub">시컨트 법칙과 최적 사용 주파수(FOT)</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">최고 사용 주파수</div><div class="math"><div class="m">\[ \text{MUF} = f_c \times \sec\theta = \frac{f_c}{\cos\theta} \]</div></div></div><div class="fx-row"><div class="fx-lbl">최적 사용 주파수</div><div class="math"><div class="m">\[ \text{FOT} \approx 0.85 \times \text{MUF} \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(\text{MUF}\)</div><div class="sy-d">전리층에서 반사되는 가장 높은 주파수</div><div class="sy-u">MHz</div></div><div class="sy"><div class="sy-s">\(f_c\)</div><div class="sy-d">수직 입사 임계 주파수 (이온존데 측정값)</div><div class="sy-u">MHz</div></div><div class="sy"><div class="sy-s">\(\theta\)</div><div class="sy-d">전리층 법선(수직선)에 대한 입사각</div><div class="sy-u">°</div></div><div class="sy"><div class="sy-s">\(\text{FOT}\)</div><div class="sy-d">안정적인 교신을 위한 최적 주파수</div><div class="sy-u">MHz</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>HF 원거리 교신에서 전리층에 반사되어 돌아올 수 있는 주파수의 상한입니다. 안테나 발사각이 낮을수록 전리층 입사각(θ)이 커져, 수직 임계 주파수(<i>f</i><sub>c</sub>)의 3~4배 높은 주파수까지 전리층을 뚫지 않고 반사되어 먼 곳까지 스킵합니다.</p></div>
+    </article>
+    <article class="fcard" id="f24" data-k="열잡음 바닥 · Friis 잡음 지수 · IIP3 물리적 수신 한계(kTB), 다단 잡음 지수, 3차 인터셉트">
+      <header class="fc-hd"><span class="fc-no">24</span><div><h3>열잡음 바닥 · Friis 잡음 지수 · IIP3</h3><p class="fc-sub">물리적 수신 한계(kTB), 다단 잡음 지수, 3차 인터셉트</p></div></header>
+      <div class="fx"><div class="fx-row"><div class="fx-lbl">열잡음 바닥</div><div class="math"><div class="m">\[ P_N\,[\text{dBm}] = -174\ [\text{dBm/Hz}] \]</div><div class="m">\[ + 10\log_{10} B\,[\text{Hz}] \]</div></div></div><div class="fx-row"><div class="fx-lbl">Friis 다단 잡음 지수</div><div class="math"><div class="m">\[ F_{\text{total}} = F_1 + \frac{F_2 - 1}{G_1} + \frac{F_3 - 1}{G_1 G_2} \]</div></div></div><div class="fx-row"><div class="fx-lbl">3차 입력 인터셉트</div><div class="math"><div class="m">\[ \text{IIP}_3\,[\text{dBm}] = P_{\text{in}} + \frac{\Delta P}{2} \]</div></div></div></div>
+      
+      <div class="syms"><div class="syms-hd">기호와 단위</div><div class="sy-list"><div class="sy"><div class="sy-s">\(P_N,\ B\)</div><div class="sy-d">상온(290 K) 열잡음 전력, 수신 필터 대역폭 (CW 500 Hz, SSB 2.4 kHz)</div><div class="sy-u">dBm, Hz</div></div><div class="sy"><div class="sy-s">\(F_{1\sim3},\ G_{1\sim2}\)</div><div class="sy-d">각 증폭단의 선형 잡음 지수(noise factor), 선형 전력 이득</div><div class="sy-u"></div></div><div class="sy"><div class="sy-s">\(P_{\text{in}}\)</div><div class="sy-d">투톤 시험 입력 신호 레벨</div><div class="sy-u">dBm</div></div><div class="sy"><div class="sy-s">\(\Delta P\)</div><div class="sy-d">기본파 출력과 3차 상호변조(IMD3) 출력의 레벨 차이</div><div class="sy-u">dB</div></div></div></div>
+      
+      <div class="point"><div class="point-hd">의미와 운용 포인트</div><p>필터 대역폭(<i>B</i>)을 2.4 kHz(SSB)에서 500 Hz(CW)로 좁히면 잡음 바닥이 약 6.8 dB 내려가 약한 신호가 훨씬 잘 들립니다. 콘테스트처럼 가까운 주파수에 강한 신호가 몰린 환경에서는 <b>IIP₃가 높은 수신기일수록 3차 상호변조 왜곡(IMD3)이 덜 생겨 유리합니다</b>(동적 범위).</p></div>
+    </article>
+  </section>
+
+  <section class="scene" id="s7">
+    <div class="tag">부록 · IEC 60062</div>
+    <h2>저항 색띠 코드표</h2>
+    <p class="sec-sub">일반 탄소피막(4색띠)과 정밀 금속피막(5색띠) 저항 읽는 법</p>
+    <article class="fcard" data-k="저항 색띠 코드 4색띠 5색띠 resistor color code 갈색 금색">
+      <div class="rguide">
+        <div><b>4색띠</b> (일반, 금색 ±5 % · 은색 ±10 %)<br><span class="rform">첫째 숫자 · 둘째 숫자 · 승수 · 오차</span>
+          <p class="rex">예: 갈(1)·흑(0)·적(×100)·금(±5 %) = 10 × 100 = <b>1 kΩ ±5 %</b><br>예: 황(4)·자(7)·금(×0.1)·금(±5 %) = 47 × 0.1 = <b>4.7 Ω ±5 %</b></p></div>
+        <div><b>5색띠</b> (정밀, 갈색 ±1 % 이하)<br><span class="rform">첫째 · 둘째 · 셋째 숫자 · 승수 · 오차</span>
+          <p class="rex">예: 갈(1)·흑(0)·흑(0)·갈(×10)·갈(±1 %) = 100 × 10 = <b>1.00 kΩ ±1 %</b><br>오차 띠는 한쪽 끝에 있고 다른 띠와 간격이 조금 더 벌어져 있습니다.</p></div>
+      </div>
+      <div class="table-wrap"><table class="rtbl"><thead><tr><th>색</th><th>숫자</th><th>승수</th><th>오차</th></tr></thead><tbody><tr><td class="rc"><span class="chip" style="background:#0f172a"></span>흑색 <small>Black</small></td><td>0</td><td>×1</td><td>—</td></tr><tr><td class="rc"><span class="chip" style="background:#78350f"></span>갈색 <small>Brown</small></td><td>1</td><td>×10</td><td>±1 %</td></tr><tr><td class="rc"><span class="chip" style="background:#dc2626"></span>적색 <small>Red</small></td><td>2</td><td>×100</td><td>±2 %</td></tr><tr><td class="rc"><span class="chip" style="background:#ea580c"></span>주황 <small>Orange</small></td><td>3</td><td>×1 k</td><td>±0.05 %</td></tr><tr><td class="rc"><span class="chip" style="background:#eab308"></span>황색 <small>Yellow</small></td><td>4</td><td>×10 k</td><td>±0.02 %</td></tr><tr><td class="rc"><span class="chip" style="background:#16a34a"></span>녹색 <small>Green</small></td><td>5</td><td>×100 k</td><td>±0.5 %</td></tr><tr><td class="rc"><span class="chip" style="background:#2563eb"></span>청색 <small>Blue</small></td><td>6</td><td>×1 M</td><td>±0.25 %</td></tr><tr><td class="rc"><span class="chip" style="background:#7c3aed"></span>자색 <small>Violet</small></td><td>7</td><td>×10 M</td><td>±0.1 %</td></tr><tr><td class="rc"><span class="chip" style="background:#64748b"></span>회색 <small>Grey</small></td><td>8</td><td>×100 M</td><td>±0.01 %</td></tr><tr><td class="rc"><span class="chip" style="background:#ffffff"></span>백색 <small>White</small></td><td>9</td><td>×1 G</td><td>—</td></tr><tr><td class="rc"><span class="chip" style="background:linear-gradient(135deg,#f5d77a,#c9a227 55%,#8a6d14)"></span>금색 <small>Gold</small></td><td>—</td><td>×0.1</td><td>±5 %</td></tr><tr><td class="rc"><span class="chip" style="background:linear-gradient(135deg,#f1f5f9,#a8b2bd 55%,#6b7280)"></span>은색 <small>Silver</small></td><td>—</td><td>×0.01</td><td>±10 %</td></tr></tbody></table></div>
+    </article>
+  </section>
+  <footer>
+    <p>아마추어 무선 &amp; 전파공학 공식 핸드북 · 공식 24개와 저항 색띠 코드표</p>
+    <p>계산 기준: 안테나 절단식은 단축 계수 0.95, 열잡음은 상온 290 K, S-미터는 IARU 권고(S9 = HF −73 dBm, VHF −93 dBm), 경로 손실은 거리 km·주파수 MHz 단위입니다. 실제 값은 설치 환경과 부품 규격에 따라 달라집니다.</p>
+  </footer>
+</main>
+
+<script>
+/* ---------- 공식 찾기 ---------- */
+(function(){
+  var q=document.getElementById('find'), msg=document.getElementById('find-msg');
+  var cards=[].slice.call(document.querySelectorAll('.fcard'));
+  cards.forEach(function(c){ c._t=(c.getAttribute('data-k')+' '+c.textContent).toLowerCase().replace(/\s+/g,' '); });
+  function run(){
+    var v=q.value.trim().toLowerCase(), n=0;
+    cards.forEach(function(c){ var hit=!v||c._t.indexOf(v)>=0; c.hidden=!hit; if(hit)n++; });
+    document.querySelectorAll('section.scene').forEach(function(s){ s.hidden=!s.querySelector('.fcard:not([hidden])'); });
+    msg.textContent = v ? (n ? n+'개 찾음 · 칸을 비우면 모두 보입니다' : '찾는 공식이 없습니다') : '';
+  }
+  q.addEventListener('input',run);
+})();
+</script>
+<script>
+/* ---------- 블로그(iframe) 삽입: 높이·보이는 범위 주고받기 (antenna-types 규약) ---------- */
+(function(){
+  if (window.self === window.top) return;
+  var last = 0, on = false;
+  function send(force){
+    if (!on) return;
+    var h = Math.ceil(document.body.getBoundingClientRect().height);
+    if (!force && Math.abs(h - last) < 2) return;
+    last = h;
+    try { window.parent.postMessage({type: 'antenna-types:height', height: h}, '*'); } catch(e){}
+  }
+  window.addEventListener('message', function(e){
+    var d = e.data;
+    if (!d || typeof d !== 'object') return;
+    if (d.type === 'antenna-types:ping'){
+      var first = !on;
+      if (!on){ on = true; window.__embedOn = true; document.documentElement.classList.add('embedded'); }
+      send(true);
+      if (first) setTimeout(jumpHash, 200);
+    } else if (d.type === 'antenna-types:viewport'){
+      window.__embedView = {top: +d.top || 0, height: +d.height || 0};
+    }
+  });
+  if ('ResizeObserver' in window) new ResizeObserver(function(){ send(false); }).observe(document.body);
+  window.addEventListener('load', function(){ send(true); });
+  function scrollToEl(el){
+    var v = window.__embedView, H = v && v.height ? v.height : 800;
+    var y = el.getBoundingClientRect().top + window.scrollY - 70 + H / 2;
+    try { window.parent.postMessage({type: 'antenna-types:scrollto', y: y, smooth: true}, '*'); } catch(e){}
+  }
+  function jumpHash(){
+    var t = location.hash && document.getElementById(location.hash.slice(1));
+    if (t) scrollToEl(t);
+  }
+  document.addEventListener('click', function(e){
+    if (!window.__embedOn) return;
+    var a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a) return;
+    var t = document.getElementById(a.getAttribute('href').slice(1)); if (!t) return;
+    e.preventDefault(); scrollToEl(t);
+  });
+})();
+</script>
+</body>
+</html>
